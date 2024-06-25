@@ -10,10 +10,30 @@ public class Enemy : MonoBehaviour
 
     private Player _player;
 
+    private Animator _enemyAnimator;
+    private BoxCollider2D _enemyBoxCollider;
+
+    private AudioSource _explosionSoundFX;
+
     // Start is called before the first frame update
     void Start()
     {
         _player = GameObject.Find("Player").GetComponent<Player>();
+        if (_player == null)
+        {
+            Debug.Log("Cannot get Player component in Start method of Enemy script!");
+        }
+
+        _enemyAnimator = gameObject.GetComponent<Animator>();
+
+        if (_enemyAnimator == null)
+        {
+            Debug.Log("Cannot get Animator component in Start method of Enemy script!");
+        }
+        _enemyAnimator.ResetTrigger("OnEnemyDeath");
+
+        _enemyBoxCollider = gameObject.GetComponent<BoxCollider2D>();
+        _explosionSoundFX = gameObject.GetComponent<AudioSource>();
     }
 
     // Update is called once per frame
@@ -21,9 +41,9 @@ public class Enemy : MonoBehaviour
     {
         transform.Translate(Vector3.down * _enemySpeed * Time.deltaTime);
 
-        if (transform.position.y < -3.9)
+        if (transform.position.y < - 5.0f)
         {
-            transform.position = new Vector3(Random.Range(-9.3f, 9.3f), 7.6f, 0);
+            Destroy(this.gameObject);
         }
     }
 
@@ -37,8 +57,10 @@ public class Enemy : MonoBehaviour
             {
                 player.TakeDamage();
             }
+            _enemyAnimator.SetTrigger("OnEnemyDeath");
 
-            Destroy(this.gameObject);
+            _explosionSoundFX.Play();
+            Destroy(this.gameObject, 2.5f);
         }
 
         if (other.CompareTag("Laser"))
@@ -48,7 +70,10 @@ public class Enemy : MonoBehaviour
             {
                 _player.UpdateScore();
             }
-            Destroy(this.gameObject);
+            _enemyAnimator.SetTrigger("OnEnemyDeath");
+            _explosionSoundFX.Play();
+            Destroy(this.gameObject, 2.5f);
         }
+        _enemyBoxCollider.enabled = false;
     }
 }

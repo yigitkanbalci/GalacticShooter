@@ -29,19 +29,17 @@ public class SpawnManager : MonoBehaviour
     {
         _spawnEnemyRoutine = SpawnEnemyRoutine();
         _spawnBoosterRoutine = SpawnBoosterRoutine();
+    }
 
+    public void SpawnStart()
+    {
         StartCoroutine(_spawnEnemyRoutine);
         StartCoroutine(_spawnBoosterRoutine);
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-
-    }
-
     IEnumerator SpawnEnemyRoutine()
     {
+        yield return new WaitForSeconds(3.0f);
         while(_stopSpawning == false)
         {
             GameObject newEnemey = Instantiate(_enemyPrefab, new Vector3(Random.Range(-9.3f, 9.3f), 7.6f, 0), Quaternion.identity);
@@ -52,6 +50,7 @@ public class SpawnManager : MonoBehaviour
 
     IEnumerator SpawnBoosterRoutine()
     {
+        yield return new WaitForSeconds(3.0f);
         GameObject newBooster = null;
 
         while(_stopSpawning == false)
@@ -81,7 +80,7 @@ public class SpawnManager : MonoBehaviour
                 newBooster.transform.parent = _boosterContainer.transform;
 
             }
-            yield return new WaitForSeconds(Random.Range(3.0f, 7.0f));
+            yield return new WaitForSeconds(Random.Range(5.0f, 10.0f));
         }
     }
 

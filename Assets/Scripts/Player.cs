@@ -36,8 +36,14 @@ public class Player : MonoBehaviour
     [SerializeField]
     private int _playerScore = 0;
 
+    [SerializeField]
+    private GameObject _damageFireFXLeft, _damageFireFXRight;
 
     [SerializeField]
+    private AudioSource _laserFx;
+
+    [SerializeField]
+    private AudioSource _powerUpFx;
     // Start is called before the first frame update
     void Start()
     {
@@ -66,20 +72,8 @@ public class Player : MonoBehaviour
 
         Vector3 direction = new Vector3(_horizontalAxis, _verticalAxis, 0);
 
-        transform.Translate(direction * _speed * Time.deltaTime);
+        transform.Translate(_speed * Time.deltaTime * direction);
 
-        //screen Bounds
-
-        //WALLS OF SCREEN
-        //if y position is greater than 6.3 and less than -4.3
-        //reset position to 6.3 or -4.3
-
-        //if x position is greater than 9.5 and less than -9.5
-        //reset position to 9.5 or -9.5
-
-        //WRAPPING AROUND
-        //if y position is greater than 7.6 reset it to -5.5 and vice versa
-        //if x position is greater than 11.2 reset it to -11.3 and vice versa
 
         if (transform.position.y > 7.6)
         {
@@ -116,9 +110,8 @@ public class Player : MonoBehaviour
                 GameObject tripleShotBeam = Instantiate(_tripleShotPrefab, laserSpawnPosition, Quaternion.identity);
 
             }
-
+            _laserFx.Play();
         }
-
     }
 
     bool LaserCooldown()
@@ -139,6 +132,15 @@ public class Player : MonoBehaviour
             _uiManager.UpdateLivesDisplay(_playerLife);
         }
 
+        if (_playerLife == 2)
+        {
+            _damageFireFXLeft.SetActive(true);
+
+        } else if (_playerLife == 1)
+        {
+            _damageFireFXRight.SetActive(true);
+        }
+
         if (_playerLife == 0)
         {
             _uiManager.DisplayGameOver();
@@ -150,12 +152,14 @@ public class Player : MonoBehaviour
     public void ActivateTripleShot()
     {
         _tripleShotActive = true;
+        _powerUpFx.Play();
         StartCoroutine(TripleShotPowerDown());
     }
 
     public void ActivateSpeedBooster()
     {
         _speed = 20.0f;
+        _powerUpFx.Play();
         StartCoroutine(SpeedBoosterPowerDown());
     }
 
@@ -163,6 +167,7 @@ public class Player : MonoBehaviour
     {
         _playerShield.SetActive(true);
         _shieldBoosterActive = true;
+        _powerUpFx.Play();
         StartCoroutine(ShieldBoosterPowerDown());
     }
 
