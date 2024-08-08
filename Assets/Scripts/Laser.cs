@@ -6,6 +6,7 @@ public class Laser : MonoBehaviour
 {
     [SerializeField]
     private float _beamSpeed = 8.0f;
+    private bool _isEnemyLaser = false;
 
     // Start is called before the first frame update
     void Start()
@@ -22,7 +23,13 @@ public class Laser : MonoBehaviour
 
     void MoveBeam()
     {
-        transform.Translate(Vector3.up * _beamSpeed * Time.deltaTime);
+        if (_isEnemyLaser == true)
+        {
+            MoveDown();
+        } else
+        {
+            MoveUp();
+        }
     }
 
     void CleanUpBeams()
@@ -30,6 +37,35 @@ public class Laser : MonoBehaviour
         if (transform.position.y > 8)
         {
             Destroy(this.gameObject);
+        }
+    }
+
+    void MoveUp()
+    {
+        transform.Translate(Vector3.up * _beamSpeed * Time.deltaTime);
+    }
+
+    void MoveDown()
+    {
+        transform.Translate(Vector3.down * _beamSpeed * Time.deltaTime);
+
+    }
+
+    public void _setEnemyLaser()
+    {
+        _isEnemyLaser = true;
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.tag == "Player" && _isEnemyLaser == true)
+        {
+            Player player = collision.GetComponent<Player>();
+            if (player != null)
+            {
+                player.TakeDamage();
+                Destroy(this.gameObject);
+            }
         }
     }
 }
