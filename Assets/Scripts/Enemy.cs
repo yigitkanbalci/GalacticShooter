@@ -8,7 +8,10 @@ public class Enemy : MonoBehaviour
     [SerializeField]
     private float _enemySpeed = 4.0f;
 
-    private Player _player;
+    private Player _player = null;
+
+    private Player _player1 = null;
+    private Player _player2 = null;
 
     private Animator _enemyAnimator;
     private BoxCollider2D _enemyBoxCollider;
@@ -20,13 +23,22 @@ public class Enemy : MonoBehaviour
     private float _fireRate = 3.0f;
     private float _canFire = -1;
 
+    private GameManager _gameManager;
+
     // Start is called before the first frame update
     void Start()
     {
-        _player = GameObject.Find("Player").GetComponent<Player>();
-        if (_player == null)
+        _gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
+        if (_gameManager != null)
         {
-            Debug.Log("Cannot get Player component in Start method of Enemy script!");
+            if (_gameManager.isCoOp == true)
+            {
+                _player1 = GameObject.Find("Player_1").GetComponent<Player>();
+                _player2 = GameObject.Find("Player_2").GetComponent<Player>();
+            } else
+            {
+                _player = GameObject.Find("Player").GetComponent<Player>();
+            }
         }
 
         _enemyAnimator = gameObject.GetComponent<Animator>();
@@ -89,9 +101,9 @@ public class Enemy : MonoBehaviour
         {
 
             Destroy(other.gameObject);
-            if (_player != null)
+            if (player != null)
             {
-                _player.UpdateScore();
+                player.UpdateScore();
             }
             _enemyAnimator.SetTrigger("OnEnemyDeath");
             _explosionSoundFX.Play();

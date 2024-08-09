@@ -1477,6 +1477,16 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player_2
       objectReference: {fileID: 0}
+    - target: {fileID: 5221258751761387710, guid: ea4d73d08776f4c499b8e439679ac32b,
+        type: 3}
+      propertyPath: _laserFx
+      value: 
+      objectReference: {fileID: 1077166137}
+    - target: {fileID: 5221258751761387710, guid: ea4d73d08776f4c499b8e439679ac32b,
+        type: 3}
+      propertyPath: _powerUpFx
+      value: 
+      objectReference: {fileID: 2017325951}
     - target: {fileID: 5221258751761387711, guid: ea4d73d08776f4c499b8e439679ac32b,
         type: 3}
       propertyPath: m_RootOrder
@@ -1850,21 +1860,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 5221258751761387708, guid: ea4d73d08776f4c499b8e439679ac32b,
-        type: 3}
-      propertyPath: m_Color.b
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 5221258751761387708, guid: ea4d73d08776f4c499b8e439679ac32b,
-        type: 3}
-      propertyPath: m_Color.g
-      value: 0.56352735
-      objectReference: {fileID: 0}
-    - target: {fileID: 5221258751761387708, guid: ea4d73d08776f4c499b8e439679ac32b,
-        type: 3}
-      propertyPath: m_Color.r
-      value: 0.4575472
-      objectReference: {fileID: 0}
     - target: {fileID: 5221258751761387709, guid: ea4d73d08776f4c499b8e439679ac32b,
         type: 3}
       propertyPath: m_Name
