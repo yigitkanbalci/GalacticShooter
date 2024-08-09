@@ -44,10 +44,19 @@ public class Player : MonoBehaviour
 
     [SerializeField]
     private AudioSource _powerUpFx;
+
+    private GameManager _gameManager;
     // Start is called before the first frame update
     void Start()
     {
-        transform.position = new Vector3(0, 0, 0);
+        _gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
+        if (_gameManager != null)
+        {
+            if (_gameManager.isCoOp == false)
+            {
+                transform.position = new Vector3(0, 0, 0);
+            }
+        }
         _spawnManager = GameObject.Find("SpawnManager").GetComponent<SpawnManager>();
         _uiManager = GameObject.Find("Canvas").GetComponent<UIManager>();
         _playerShield = transform.GetChild(0).gameObject;
