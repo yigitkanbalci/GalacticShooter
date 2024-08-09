@@ -51,10 +51,10 @@ public class Enemy : MonoBehaviour
             _fireRate = Random.Range(3f, 7f);
             _canFire = Time.time + _fireRate;
             GameObject enemyLaser = Instantiate(_laserPrefab, transform.position, Quaternion.identity);
-            Laser[] lasers = enemyLaser.GetComponentsInChildren<Laser>();
-            for (int i = 0; i < lasers.Length; i++)
+            Laser laser = enemyLaser.GetComponentInChildren<Laser>();
+            if (laser != null)
             {
-                lasers[i]._setEnemyLaser();
+                laser._setEnemyLaser();
             }
         }
     }
@@ -87,10 +87,7 @@ public class Enemy : MonoBehaviour
 
         if (other.CompareTag("Laser"))
         {
-            float enemyPos = transform.position.y;
-            float laserpos = other.transform.position.y;
-            print(laserpos);
-            print(enemyPos);
+
             Destroy(other.gameObject);
             if (_player != null)
             {

@@ -20,6 +20,11 @@ public class GameManager : MonoBehaviour
         {
             SceneManager.LoadSceneAsync(SceneManager.GetActiveScene().name);
         }
+
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            Application.Quit();
+        }
     }
 
     public void GameOver()

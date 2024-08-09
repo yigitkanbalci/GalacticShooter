@@ -8,10 +8,14 @@ public class Laser : MonoBehaviour
     private float _beamSpeed = 8.0f;
     private bool _isEnemyLaser = false;
 
+    [SerializeField]
+    private AudioSource _explosionSoundFX;
+    private SpriteRenderer _rend;
+
     // Start is called before the first frame update
     void Start()
     {
-        
+        _rend = gameObject.GetComponent<SpriteRenderer>();
     }
 
     // Update is called once per frame
@@ -64,7 +68,12 @@ public class Laser : MonoBehaviour
             if (player != null)
             {
                 player.TakeDamage();
-                Destroy(this.gameObject);
+                if (_explosionSoundFX != null)
+                {
+                    _explosionSoundFX.Play();
+                }
+                _rend.enabled = false; ;
+                Destroy(this.gameObject, 2.5f);
             }
         }
     }
