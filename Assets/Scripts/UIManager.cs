@@ -19,6 +19,8 @@ public class UIManager : MonoBehaviour
     private Sprite[] _livesSprites;
     [SerializeField]
     private GameManager _gameManager;
+
+    private Animator _pauseAnim;
     //private SceneManager _sceneManager;
 
     // Start is called before the first frame update
@@ -27,6 +29,7 @@ public class UIManager : MonoBehaviour
         _scoreText.text = "Score: " + 0;
         _gameOverText.gameObject.SetActive(false);
         _restartText.gameObject.SetActive(false);
+        _pauseAnim = transform.Find("Pause_menu").GetComponent<Animator>();
     }
 
     // Update is called once per frame
@@ -63,4 +66,21 @@ public class UIManager : MonoBehaviour
         }
         yield break;
     }
+
+    public void ResumeGame()
+    {
+        _gameManager.ResumeGame();
+    }
+
+    public void MainMenu()
+    {
+        _gameManager.ResumeGame();
+        SceneManager.LoadScene(0);
+    }
+
+    public void AnimatePauseMenu()
+    {
+        _pauseAnim.SetBool("isPaused", true);
+    }
+
 }

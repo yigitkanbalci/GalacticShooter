@@ -8,11 +8,6 @@ public class Enemy : MonoBehaviour
     [SerializeField]
     private float _enemySpeed = 4.0f;
 
-    private Player _player = null;
-
-    private Player _player1 = null;
-    private Player _player2 = null;
-
     private Animator _enemyAnimator;
     private BoxCollider2D _enemyBoxCollider;
 
@@ -28,18 +23,6 @@ public class Enemy : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        _gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
-        if (_gameManager != null)
-        {
-            if (_gameManager.isCoOp == true)
-            {
-                _player1 = GameObject.Find("Player_1").GetComponent<Player>();
-                _player2 = GameObject.Find("Player_2").GetComponent<Player>();
-            } else
-            {
-                _player = GameObject.Find("Player").GetComponent<Player>();
-            }
-        }
 
         _enemyAnimator = gameObject.GetComponent<Animator>();
 
